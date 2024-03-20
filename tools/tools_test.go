@@ -23,12 +23,12 @@ func TestContainsString(t *testing.T) {
 }
 
 func TestValidateConditions(t *testing.T) {
-	// 初始化数据库连接
+	// 初始化資料庫連接
 	database.Init()
 	conditions := adstruct.Conditions{
 		Age:      tools.PtrInt(25),
 		Gender:   tools.PtrString("M"),
-		Country:  &[]string{"TW"}, // 设置为包含一个国家的切片
+		Country:  &[]string{"TW"}, // 設定為包含一個國家的切片
 		Platform: &[]string{"android", "ios"},
 	}
 
@@ -37,7 +37,7 @@ func TestValidateConditions(t *testing.T) {
 		t.Errorf("Validation failed with error: %v", err)
 	}
 
-	// Test invalid age
+	// 測試無效年齡
 	conditions.Age = tools.PtrInt(101)
 	err = tools.ValidateConditions(conditions)
 	expectedErrMsg := "invalid age value. age must be between 1 and 100"
@@ -45,7 +45,7 @@ func TestValidateConditions(t *testing.T) {
 		t.Errorf("Expected validation error: %s, but got: %v", expectedErrMsg, err)
 	}
 
-	// Test invalid gender
+	// 測試無效性別
 	conditions.Age = tools.PtrInt(25)
 	conditions.Gender = tools.PtrString("X")
 	expectedErrMsg = "invalid gender value. gender must be M or F"
@@ -54,7 +54,7 @@ func TestValidateConditions(t *testing.T) {
 		t.Errorf("Expected validation error: %s, but got: %v", expectedErrMsg, err)
 	}
 
-	// Test invalid country
+	// 測試無效國家
 	conditions.Gender = tools.PtrString("M")
 	conditions.Country = &[]string{"TW", "XXX"}
 	expectedErrMsg = "invalid country value: XXX"
@@ -63,7 +63,7 @@ func TestValidateConditions(t *testing.T) {
 		t.Errorf("Expected validation error: %s, but got: %v", expectedErrMsg, err)
 	}
 
-	// Test invalid platform
+	// 測試無效平台
 	conditions.Country = &[]string{"TW", "JP"}
 	conditions.Platform = &[]string{"android", "invalid"}
 	expectedErrMsg = "invalid platform value. platform must be android, ios, or web"
@@ -71,34 +71,34 @@ func TestValidateConditions(t *testing.T) {
 	if err == nil || err.Error() != expectedErrMsg {
 		t.Errorf("Expected validation error: %s, but got: %v", expectedErrMsg, err)
 	}
-	// 关闭数据库连接
+	// 關閉資料庫連接
 	database.CloseDatabase()
 }
 
 func TestQueryAdsFromDatabase(t *testing.T) {
-	// Initialize database connection
+	// 初始化資料庫連接
 	database.Init()
 
-	// Perform query
+	// 執行查詢
 	err := database.QueryAdsFromDatabase()
 	if err != nil {
 		t.Errorf("QueryAdsFromDatabase failed with error: %v", err)
 	}
 
-	// Close database connection
+	// 關閉資料庫連接
 	database.CloseDatabase()
 }
 
 func TestMain(m *testing.M) {
-	// Setup
+	// 設定
 	database.Init()
 
-	// Run tests
+	// 執行測試
 	exitCode := m.Run()
 
-	// Teardown
+	// 關閉資料庫連接
 	database.CloseDatabase()
 
-	// Exit with the same exit code as the tests
+	// 退出測試
 	os.Exit(exitCode)
 }

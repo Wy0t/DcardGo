@@ -8,7 +8,7 @@ import (
 	"github.com/Wy0t/DcardGo/adstruct"
 	"github.com/Wy0t/DcardGo/database"
 
-	_ "github.com/go-sql-driver/mysql" // 导入 MySQL 驱动
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func TestInitDatabase(t *testing.T) {
@@ -26,12 +26,12 @@ func TestInitDatabase(t *testing.T) {
 		t.Errorf("Expected database connection to be initialized, got nil")
 	}
 
-	// 确保测试结束时关闭数据库连接
+	// 確保測試結束時關閉資料庫連接
 	defer database.CloseDatabase()
 }
 
 func TestQueryAdsFromDatabase(t *testing.T) {
-	// 初始化数据库
+	// 初始化資料庫
 	database.Init()
 	defer database.CloseDatabase()
 
@@ -52,7 +52,7 @@ func TestQueryAdsFromDatabase(t *testing.T) {
 }
 
 func TestIncrementAdCreationCount(t *testing.T) {
-	// 初始化数据库
+	// 初始化資料庫
 	database.Init()
 	defer database.CloseDatabase()
 
@@ -74,15 +74,15 @@ func TestIncrementAdCreationCount(t *testing.T) {
 }
 
 func TestMain(m *testing.M) {
-	// 初始化数据库
+	// 初始化資料庫
 	database.Init()
 
-	// 执行测试
+	// 執行測試
 	exitVal := m.Run()
 
-	// 关闭数据库连接
+	// 關閉資料庫連接
 	database.CloseDatabase()
 
-	// 退出测试
+	// 退出測試
 	os.Exit(exitVal)
 }

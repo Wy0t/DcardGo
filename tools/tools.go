@@ -55,12 +55,12 @@ func ValidateConditions(conditions adstruct.Conditions) error {
 	return nil
 }
 
-// 创建一个指向整数的指针
+// 建立一個指向整數的指針
 func PtrInt(v int) *int {
 	return &v
 }
 
-// 创建一个指向字符串的指针
+// 建立一個指向字串的指針
 func PtrString(v string) *string {
 	return &v
 }

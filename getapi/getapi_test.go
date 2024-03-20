@@ -15,37 +15,36 @@ import (
 )
 
 func TestGetAD(t *testing.T) {
-	// 初始化一个新的gin路由
+	// 初始化一個新的gin路由
 	router := gin.New()
 
-	// 定义一个使用GetAD处理程序的路由
+	// 定義一個使用GetAD處理程序的路由
 	router.GET("/get-ad", getapi.GetAD)
 
-	// 设置模拟的广告数据
+	// 設定模擬的廣告數據
 	adstruct.ADs = []adstruct.AD{
 		{Title: "Ad 1", StartAt: time.Now().Add(-time.Hour), EndAt: time.Now().Add(time.Hour), Conditions: adstruct.Conditions{}},
 		{Title: "Ad 2", StartAt: time.Now().Add(-time.Hour), EndAt: time.Now().Add(time.Hour), Conditions: adstruct.Conditions{}},
-		// 添加更多广告数据...
 	}
 
-	// 创建一个HTTP请求
+	// 建立一個HTTP請求
 	req, err := http.NewRequest("GET", "/get-ad", nil)
 	assert.NoError(t, err)
 
-	// 创建一个记录器以记录响应
+	// 建立一個記錄器以記錄回應
 	resp := httptest.NewRecorder()
 
-	// 提供请求给路由器
+	// 提供請求給路由器
 	router.ServeHTTP(resp, req)
 
-	// 断言响应状态码为200
+	// 斷言回應狀態碼為200
 	assert.Equal(t, http.StatusOK, resp.Code)
 
-	// 解码JSON响应并检查活动广告数
+	// 解碼JSON回應並檢查活動廣告數
 	var ads []adstruct.AD
 	err = json.NewDecoder(resp.Body).Decode(&ads)
 	assert.NoError(t, err)
 
-	// 断言活动广告的数量
+	// 斷言活動廣告的數量
 	assert.NotEmpty(t, ads)
 }
