@@ -22,13 +22,13 @@ func TestADJSONSerialization(t *testing.T) {
 		},
 	}
 
-	// 序列化AD结构到JSON
+	// 序列化AD結構到JSON
 	jsonData, err := json.Marshal(ad)
 	if err != nil {
 		t.Errorf("Error marshalling AD struct to JSON: %v", err)
 	}
 
-	// 反序列化JSON到AD结构
+	// 反序列化JSON到AD結構
 	var adFromJSON AD
 	err = json.Unmarshal(jsonData, &adFromJSON)
 	if err != nil {
